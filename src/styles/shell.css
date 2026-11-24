@@ -1,0 +1,61 @@
+/* App shell: removes the starter-template layout (the two lines at the sides) and sets the black, white and silver theme. */
+html, body { margin: 0; background: #000; }
+html body { display: block; min-width: 0; }
+html body #root { display: block; width: 100%; max-width: none; min-height: 100svh; margin: 0; padding: 0; border: 0; text-align: left; }
+
+html body .app-wrapper {
+  --accent: #fff;
+  --text-bright: #fff;
+  --text-muted: #8a8e96;
+  --panel-bg: rgba(255, 255, 255, 0.04);
+  --text: #c2c5cb;
+  --bg: #000;
+  --border: rgba(255, 255, 255, 0.16);
+  --silver: #c2c5cb;
+  --line: rgba(255, 255, 255, 0.16);
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: none;
+  min-height: 100svh;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+  font-family: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  text-align: left;
+}
+html body .app-wrapper :is(h1, h2, h3) { font-family: 'Syne', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+html body .main-content { position: relative; z-index: 1; width: 100%; max-width: none; margin: 0; padding: 0; background: transparent; }
+/* Pages I have not restyled (for example Settings) get the same width and spacing. */
+html body .main-content > :not(.home-page):not(.dashboard-page) { box-sizing: border-box; width: 100%; max-width: 1040px; margin: 0 auto; padding: clamp(28px, 6vw, 64px) clamp(16px, 4vw, 32px) 80px; }
+.ambient-waves { position: fixed; inset: 0; z-index: 0; display: block; width: 100%; height: 100%; pointer-events: none; }
+
+/* Menu */
+.nv { position: sticky; top: 0; z-index: 30; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 24px; padding: 12px clamp(16px, 4vw, 40px) 0; background: rgba(0, 0, 0, 0.7); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); transition: opacity 0.4s ease; animation: nv-in 0.7s ease backwards; }
+.nv-brand { display: inline-flex; align-items: center; gap: 10px; padding: 6px 0; font: 800 1.3rem/1 'Syne', 'Helvetica Neue', Arial, sans-serif; letter-spacing: -0.02em; color: #fff; background: none; border: 0; cursor: pointer; }
+.nv-mark { width: 26px; height: 12px; fill: none; stroke: #fff; stroke-width: 1.4; stroke-dasharray: 5 3; }
+.nv-brand:hover .nv-mark { animation: nv-flow 0.8s linear infinite; }
+.nv-links { position: relative; display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.nv-bar { position: absolute; left: 0; bottom: 0; height: 2px; background: #fff; pointer-events: none; transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.nv-link { padding: 14px 16px; font: 600 0.95rem/1 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif; color: var(--silver); background: none; border: 0; border-radius: 0; cursor: pointer; transition: color 0.25s; }
+.nv-link:hover, .nv-link[aria-current='page'] { color: #fff; }
+.nv-brand:focus-visible, .nv-link:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.app-wrapper[data-typing] .nv { opacity: 0.22; }
+.app-wrapper[data-typing] .nv:hover, .app-wrapper[data-typing] .nv:focus-within { opacity: 1; }
+
+@keyframes nv-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes nv-flow { to { stroke-dashoffset: -16; } }
+
+@media (max-width: 640px) {
+  .nv { padding: 10px 16px 0; }
+  .nv > nav { width: 100%; }
+  .nv-links { width: 100%; justify-content: space-between; overflow-x: auto; scrollbar-width: none; }
+  .nv-link { padding: 12px 10px; font-size: 0.88rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nv, .nv *, .dashboard-page, .dashboard-page *, .dashboard-page *::before, .dashboard-page *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+html.reduced-motion .nv, html.reduced-motion .nv *, html.reduced-motion .dashboard-page, html.reduced-motion .dashboard-page *, html.reduced-motion .dashboard-page *::before, html.reduced-motion .dashboard-page *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }

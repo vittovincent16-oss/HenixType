@@ -1,0 +1,240 @@
+/* Native wave mouse cursor across the whole app (never disappears on any page) */
+html,
+body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='16' viewBox='0 0 28 16'%3E%3Cpath d='M2 8 q3.5 -8 7 0 t7 0 t7 0' fill='none' stroke='%23000000' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M2 8 q3.5 -8 7 0 t7 0 t7 0' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 2 8, auto;
+}
+
+button,
+a,
+[role="button"],
+.nv-brand,
+.nv-link,
+.home-back,
+.selector-btn,
+.test-stage button {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='18' viewBox='0 0 32 18'%3E%3Cpath d='M2 9 q4 -9 8 0 t8 0 t8 0' fill='none' stroke='%23000000' stroke-width='4.5' stroke-linecap='round'/%3E%3Cpath d='M2 9 q4 -9 8 0 t8 0 t8 0' fill='none' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") 2 9, pointer;
+}
+
+/* Navbar container matching typing.css colors and typography */
+.nv {
+  --mx: 50%;
+  --my: 50%;
+  --silver: #c2c5cb;
+  --line: rgba(255, 255, 255, 0.16);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  font-family: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Animated bottom divider line matching .home-head::after */
+.nv::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left;
+  animation: nv-line 1s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+/* Subtle cursor-reactive spotlight across the navbar */
+.nv::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    300px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.08),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nv:hover::before {
+  opacity: 1;
+}
+
+.nv-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 32px);
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Brand logo matching .home-title font ('Syne') */
+.nv-brand {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 6px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 800 1.15rem/1 'Syne', 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: -0.03em;
+  color: #fff;
+  animation: nv-up 0.7s 0.05s backwards;
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nv-brand:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.nv-mark {
+  width: 26px;
+  height: 12px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nv-brand:hover .nv-mark {
+  transform: scaleX(1.14);
+}
+
+/* Navigation links row */
+.nv-links {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 68px;
+  animation: nv-up 0.7s 0.12s backwards;
+}
+
+.nv-links li {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Link buttons matching .home-back and .selector-btn */
+.nv-link {
+  position: relative;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  height: 100%;
+  padding: 0 14px;
+  font: 600 0.92rem/1 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--silver);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nv-link:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.nv-link[aria-current="page"] {
+  color: #fff;
+}
+
+.nv-link:focus-visible,
+.nv-brand:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+/* Sliding animated wave indicator under the active link */
+.nv-bar {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  height: 6px !important;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='6' viewBox='0 0 20 6'%3E%3Cpath d='M0 3 Q5 0 10 3 T20 3' fill='none' stroke='%23ffffff' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 20px 6px;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.75));
+  pointer-events: none;
+  animation: nv-wave-flow 1.4s linear infinite;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes nv-wave-flow {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 20px;
+  }
+}
+
+@keyframes nv-up {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nv-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .nv-inner {
+    height: auto;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .nv-links {
+    height: 40px;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .nv-link {
+    padding: 0 8px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nv,
+  .nv *,
+  .nv *::before,
+  .nv *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html.reduced-motion .nv,
+html.reduced-motion .nv *,
+html.reduced-motion .nv *::before,
+html.reduced-motion .nv *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
